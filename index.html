@@ -306,23 +306,20 @@
 
       <!-- 🔥 今晚运动目标 -->
       <div class="glass p-6 mb-6 border-l-4 border-forest" id="dash-tonight-card">
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="text-ink/60 text-sm font-medium">🔥 今晚运动目标</p>
-            <p class="font-number text-4xl font-bold text-forest mt-1" id="dash-tonight-kcal">--</p>
-            <p class="text-sm text-ink/60 mt-1" id="dash-tonight-label">kcal 需消耗</p>
-          </div>
-          <div class="text-right text-xs text-ink/40 space-y-1">
-            <p>今日已摄入 <span class="font-number text-ink/70" id="dash-tonight-intake">--</span> kcal</p>
-            <p>基础代谢 -<span class="font-number text-ink/70" id="dash-tonight-bmr">--</span> kcal</p>
-            <p>日需缺口 -<span class="font-number text-ink/70" id="dash-tonight-deficit">--</span> kcal</p>
-          </div>
+        <p class="text-ink/60 text-sm font-medium mb-2">🔥 今晚还需运动</p>
+        <div class="flex items-baseline gap-2 mb-1">
+          <span class="font-number text-7xl font-bold text-forest" id="dash-tonight-kcal">--</span>
+          <span class="text-ink/50 text-lg">kcal</span>
         </div>
-        <div id="dash-tonight-exercises" class="mt-3 grid grid-cols-3 gap-2"></div>
-        <div class="mt-2 h-3 bg-stone rounded-full overflow-hidden">
+        <p class="text-sm text-ink/60 mb-4" id="dash-tonight-label">--</p>
+        <div id="dash-tonight-exercises" class="grid grid-cols-3 gap-2 mb-3"></div>
+        <div class="h-3 bg-stone rounded-full overflow-hidden mb-2">
           <div id="dash-tonight-bar" class="h-full rounded-full transition-all duration-500" style="width: 50%; background: var(--forest)"></div>
         </div>
-        <p class="text-xs text-ink/50 mt-2" id="dash-tonight-tip">--</p>
+        <div class="flex justify-between items-center">
+          <p class="text-xs text-ink/50" id="dash-tonight-tip">--</p>
+          <p class="text-xs text-ink/30">摄入<span class="font-number text-ink/50" id="dash-tonight-intake">--</span> - BMR<span class="font-number text-ink/50" id="dash-tonight-bmr">--</span> - 缺口<span class="font-number text-ink/50" id="dash-tonight-deficit">--</span></p>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-12 gap-5 mb-6">
@@ -2276,31 +2273,31 @@
 
         if (tonightNeed <= 0) {
           tonightEl.textContent = '✅ 0';
-          tonightLabel.textContent = '今日目标已达成！';
+          tonightLabel.textContent = '今日目标已达成！无需额外运动';
           tonightBar.style.width = '100%';
           tonightBar.style.background = 'linear-gradient(90deg, #81B29A, #2D5A45)';
-          tonightTip.textContent = `摄入${Math.round(intake)} - 代谢${Math.round(bmr)} - 缺口${Math.round(requiredDeficit)} = 无需额外运动，保持节奏 👏`;
+          tonightTip.textContent = '继续保持，明天见 👏';
           tonightCard.style.borderLeftColor = '#2D5A45';
         } else if (tonightNeed < 300) {
           tonightEl.textContent = Math.round(tonightNeed);
-          tonightLabel.textContent = 'kcal 今晚轻松达标';
+          tonightLabel.textContent = '晚上轻松动一动就达标';
           tonightBar.style.width = Math.max(10, 100 - (tonightNeed / 500) * 100) + '%';
           tonightBar.style.background = 'linear-gradient(90deg, #81B29A, #E07A5F)';
-          tonightTip.textContent = '晚饭后动一动就达标，三种运动任选其一即可';
+          tonightTip.textContent = '任选下面一种运动完成即可';
           tonightCard.style.borderLeftColor = '#E07A5F';
         } else if (tonightNeed < 600) {
           tonightEl.textContent = Math.round(tonightNeed);
-          tonightLabel.textContent = 'kcal 今晚需要努力';
+          tonightLabel.textContent = '今晚认真运动一次';
           tonightBar.style.width = Math.max(10, 100 - (tonightNeed / 1000) * 100) + '%';
           tonightBar.style.background = 'linear-gradient(90deg, #E07A5F, #C85A47)';
-          tonightTip.textContent = '选一种喜欢的运动，坚持完成今晚目标！';
+          tonightTip.textContent = '选一种喜欢的运动，坚持做完！';
           tonightCard.style.borderLeftColor = '#C85A47';
         } else {
           tonightEl.textContent = Math.round(tonightNeed);
-          tonightLabel.textContent = 'kcal ⚠️ 需大量消耗';
+          tonightLabel.textContent = '今晚需要全力以赴';
           tonightBar.style.width = '10%';
           tonightBar.style.background = 'linear-gradient(90deg, #C85A47, #ff0000)';
-          tonightTip.textContent = '建议今晚控制饮食 + 选择一项运动完成';
+          tonightTip.textContent = '控制饮食 + 选一项运动尽力完成 ⚠️';
           tonightCard.style.borderLeftColor = '#ff0000';
         }
         renderExerciseGrid(tonightNeed);
