@@ -2236,7 +2236,7 @@
 
         // ─🔥 Tonight Exercise Target ─────────────────────────────────────
         const requiredDeficit = goal.requiredDaily || 500;
-        const tonightNeed = intake - bmr - requiredDeficit + burn; // burn already done today
+        const tonightNeed = requiredDeficit - bmr + intake - burn; // burn already done today
         const tonightEl = document.getElementById('dash-tonight-kcal');
         const tonightLabel = document.getElementById('dash-tonight-label');
         const tonightBar = document.getElementById('dash-tonight-bar');
@@ -2293,10 +2293,10 @@
           tonightExercises.innerHTML = '<div class="col-span-3 text-center text-sm text-ink/40 py-2">记录饮食后自动计算</div>';
         } else if (tonightNeed <= 0) {
           tonightEl.textContent = '✅ 0';
-          tonightLabel.textContent = '今晚无需额外运动，已处于缺口状态';
+          tonightLabel.textContent = '基础代谢已覆盖，无需额外运动';
           tonightBar.style.width = '100%';
           tonightBar.style.background = 'linear-gradient(90deg, #81B29A, #2D5A45)';
-          tonightTip.textContent = '摄入 ' + Math.round(intake) + ' - 代谢 ' + Math.round(bmr) + ' - 缺口 ' + Math.round(requiredDeficit) + ' = 已达标，保持即可';
+          tonightTip.textContent = '代谢 ' + Math.round(bmr) + ' - 摄入 ' + Math.round(intake) + ' ≥ 目标缺口 ' + Math.round(requiredDeficit) + '，自然达标 👏';
           tonightCard.style.borderLeftColor = '#2D5A45';
         } else if (tonightNeed < 300) {
           tonightEl.textContent = Math.round(tonightNeed);
