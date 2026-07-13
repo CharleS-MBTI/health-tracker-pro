@@ -2271,7 +2271,27 @@
           }).join('');
         };
 
-        if (tonightNeed <= 0) {
+        // Check if today has any record
+        const hasAnyRecord = today && Object.values(today).some(v => v !== '' && v !== null && v !== undefined && v !== '0' && v !== 0);
+        const hasFood = intake > 0;
+
+        if (!hasAnyRecord) {
+          tonightEl.textContent = '📝';
+          tonightLabel.textContent = '请先记录今日饮食和运动';
+          tonightBar.style.width = '0%';
+          tonightBar.style.background = '#E5DDD0';
+          tonightTip.textContent = '点击下方「记录今天」或「语音记录」开始';
+          tonightCard.style.borderLeftColor = '#E5DDD0';
+          tonightExercises.innerHTML = '<div class="col-span-3 text-center text-sm text-ink/40 py-2">记录饮食后自动计算今晚运动目标</div>';
+        } else if (!hasFood) {
+          tonightEl.textContent = '🍽️';
+          tonightLabel.textContent = '还未记录饮食，先吃点东西再算';
+          tonightBar.style.width = '5%';
+          tonightBar.style.background = '#E5DDD0';
+          tonightTip.textContent = '点击日期的「拍照估算」或手动填入早/午/晚餐';
+          tonightCard.style.borderLeftColor = '#E5DDD0';
+          tonightExercises.innerHTML = '<div class="col-span-3 text-center text-sm text-ink/40 py-2">记录饮食后自动计算</div>';
+        } else if (tonightNeed <= 0) {
           tonightEl.textContent = '✅ 0';
           tonightLabel.textContent = '今日目标已达成！无需额外运动';
           tonightBar.style.width = '100%';
@@ -2300,7 +2320,7 @@
           tonightTip.textContent = '控制饮食 + 选一项运动尽力完成 ⚠️';
           tonightCard.style.borderLeftColor = '#ff0000';
         }
-        renderExerciseGrid(tonightNeed);
+        if (hasAnyRecord && hasFood) renderExerciseGrid(tonightNeed);
 
         // Goal progress bar
         this._renderGoalProgress(p, goal, weight);
